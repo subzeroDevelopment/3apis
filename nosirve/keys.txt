@@ -1,0 +1,31 @@
+pocket{
+app_key:53840-105632a57614ddf6e5d7ff84,
+code:e626939d-8b33-c987-1bcf-9216de,
+access_token=f8e1b9ce-3b39-9004-1e25-a56ba7&username=subcero000%40gmail.com
+}
+
+evernote:
+Consumer Key: oribeabad
+Consumer Secret: 37db99eea0e5e65f
+S=s1:U=9267a:E=15b98f268a0:C=15441413c78:P=1cd:A=en-devtoken:V=2:H=02f4673f13dda969de7ff377452f314f
+https://sandbox.evernote.com/shard/s1/notestore
+
+
+bibsonomy:
+apiKey:6124d682bb73da8bb5269fe475e85a2f
+
+zotero:
+apikey:zDIQE2HGasdIonUcrV8Dnsee
+userid:3072464
+
+readability:{
+parser api:
+token:5a180fbd6d5c1338a44fa937320f9700f1a38475
+
+readerapi
+key:OribeAbadSilva
+secret:UX8XRzJMgkmsqaaFTDX9yJFPA9bWrkp2
+
+'oauth_token_secret': 'UPUM4ZddsKBrNe58e9Jb46tdg4CHdrZt',
+ 'oauth_token': 'eXefzayksuGLSqP6ea'
+}
