@@ -12,18 +12,19 @@ for item in items:
 from pyzotero import zotero
 import pymongo
 
-zot = zotero.Zotero("3072464","user","zDIQE2HGasdIonUcrV8Dnsee")
-items = zot.top()
-print len(items)
+def actualizar():
+    zot = zotero.Zotero("3072464","user","zDIQE2HGasdIonUcrV8Dnsee")
+    items = zot.top()
+    print len(items)
     # we've retrieved the latest five top-level items in our library
     # we can print each item's item type and ID
-coneccion = pymongo.MongoClient("localhost")
-db = coneccion.zotero
-db.drop_collection("bookmarks")
-datos=db.bookmarks
-for item in items:
-    print item["data"]["url"]
-    datos.insert(item)
+    coneccion = pymongo.MongoClient("localhost")
+    db = coneccion.zotero
+    db.drop_collection("bookmarks")
+    datos=db.bookmarks
+    for item in items:
+        print item["data"]["url"]
+        datos.insert(item)
 
 #for key in map["list"]:
     #print map["list"][key]["resolved_title"]

@@ -51,5 +51,5 @@ def getReadability():
 
     return arr
 
-a=getReadability()
-print len(a)
+#a=getReadability()
+#print len(a)
