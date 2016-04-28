@@ -19,16 +19,19 @@ def actualizar():
 # If no client credentials are passed to ReaderClient's constructor, they
 # will be looked for in your environment variables
 
-
+    """
     coneccion = pymongo.MongoClient("localhost")
     db = coneccion.readability
     db.drop_collection("bookmarks")
-    datos=db.bookmarks
+    datos=db.bookmarks"""
     client = ReaderClient(token_key=cred[0],token_secret=cred[1],consumer_key=consumer_key,consumer_secret=consumer_secret)
 
     print client
     bookmarks_response = client.get_bookmarks()
-    print bookmarks_response.content
+    dic=bookmarks_response.json()
+    for k in dic["bookmarks"]:
+        print k["article"]["title"]
 
-    datos.insert(bookmarks_response.json())
-    
+actualizar()
+
+    #datos.insert(bookmarks_response.json())

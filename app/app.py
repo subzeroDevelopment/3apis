@@ -1,6 +1,7 @@
 from flask import Flask,render_template,jsonify
 from readability import ReaderClient
 from readability import auth
+import tweepy
 
 #import getData,reqRead,request,reqZotero
 from pymongo import MongoClient
@@ -14,6 +15,23 @@ parser_token='5a180fbd6d5c1338a44fa937320f9700f1a38475'
 username='subcero000@gmail.com '
 password='edward.1'
 #(u'eXefzayksuGLSqP6ea', u'UPUM4ZddsKBrNe58e9Jb46tdg4CHdrZt')
+def getTweets(tag):
+    cons_key="riGxHsH7FmnEuj5EzuxcRhF34"
+    cons_secret="HOrz0GsyDysZbhPyph9P3N7SMxkHbqhl6yFZ1YmF1WETO6sO7p"
+    acc_token="2269290260-JinauwfnXKLFuLRiBa27JKaeeEEjYl2121U1XH1"
+    acc_token_secret="3H0wZiWAZtBPWFhbcOhqlSrCFjxkK1JftVEoPk65uHZSs"
+    auth = tweepy.OAuthHandler(cons_key, cons_secret)
+    auth.set_access_token(acc_token, acc_token_secret)
+    arre=[]
+    api = tweepy.API(auth)
+    search=api.search(tag,show_user=True)
+    for tweet in search:
+        obj={}
+        obj["text"]=tweet.text
+        obj["user"]=tweet.user.screen_name
+        obj["img"]=tweet.user.profile_image_url
+        arre.append(obj)
+    return arre
 
 def getAuth():
     s=auth.xauth(consumer_key=consumer_key,consumer_secret=consumer_secret,username=username,password=password);
@@ -30,9 +48,9 @@ def actualizarReadability():
     datos=db.bookmarks
     client = ReaderClient(token_key=cred[0],token_secret=cred[1],consumer_key=consumer_key,consumer_secret=consumer_secret)
 
-    print client
+    print( client)
     bookmarks_response = client.get_bookmarks()
-    print bookmarks_response.content
+    print (bookmarks_response.content)
 
     datos.insert(bookmarks_response.json())
 
@@ -40,7 +58,7 @@ def actualizarReadability():
 def actualizarZotero():
     zot = zotero.Zotero("3072464","user","zDIQE2HGasdIonUcrV8Dnsee")
     items = zot.top()
-    print len(items)
+    print(len(items))
     # we've retrieved the latest five top-level items in our library
     # we can print each item's item type and ID
     coneccion = mongoClient
@@ -48,7 +66,7 @@ def actualizarZotero():
     db.drop_collection("bookmarks")
     datos=db.bookmarks
     for item in items:
-        print item["data"]["url"]
+        print (item["data"]["url"])
         datos.insert(item)
 
 
@@ -105,14 +123,19 @@ def getReadability():
     cursor = collection.find()
     arr=[]
     for bookmark in cursor:
-        ob={}
         for item in bookmark["bookmarks"]:
+            ob={}
             ob["titulo"]=item["article"]["title"]
             ob["url"]=item["article"]["url"]
             ob["abstract"]=item["article"]["excerpt"]
             arr.append(ob)
 
     return arr
+
+def getTwts(arre):
+    for item in arre:
+        item["tweets"]=getTweets(item["titulo"])
+
 
 
 
@@ -122,9 +145,17 @@ app = Flask(__name__)
 
 @app.route('/intro')
 def index():
-    datos=getPocket()
-    datos.extend(getZotero())
-    datos.extend(getReadability())
+    d1=getPocket()
+    getTwts(d1)
+    d2=getZotero()
+    getTwts(d2)
+    d3=getReadability()
+    getTwts(d3)
+    datos=[]
+    datos.extend(d1)
+    datos.extend(d2)
+    datos.extend(d3)
+    print datos[1]
     return render_template('index2.html',data=datos)
 
 @app.route('/actualizar')

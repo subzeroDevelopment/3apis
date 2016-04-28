@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>API POLITICOS</title>
+    <title>3APIs</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +17,7 @@
     <!-- Custom CSS -->
     <link href="/static/css/round-about.css" rel="stylesheet">
       <link href="/static/css/ref.css" rel="stylesheet">
+      <link href="/static/css/mod.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -82,7 +83,9 @@
             <div class="col-lg-12">
                 <h2 class="page-header"></h2>
             </div>
+
             {% for i in data%}
+              <div class="row">
             <div class="col-lg-4 col-sm-6 text-center">
                 <img class="img-circle img-responsive img-center" src="" alt="">
                 <h3>{{i["titulo"]}}
@@ -90,7 +93,24 @@
                 </h3>
                 <p>{{i["abstract"]}}</p>
             </div>
+            {% for ele in i["tweets"]%}
+            <ul class="thumbnails">
+              <li class="col-sm-3">
+    						  <div class="fff">
+								      <div class="thumbnail">
+									       <a href="#"><img src={{ele["img"]}} alt=""></a>
+								      </div>
+								 <div class="caption">
+									<h4>{{ele["text"]}}</h4>
+									<p>{{ele["user"]}}</p>
+								</div>
+                </div>
+              </li>
+            </ul>
             {% endfor %}
+              </div>
+            {% endfor %}
+
         </div>
 
         <hr>

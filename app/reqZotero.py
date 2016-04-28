@@ -18,13 +18,14 @@ def actualizar():
     print len(items)
     # we've retrieved the latest five top-level items in our library
     # we can print each item's item type and ID
-    coneccion = pymongo.MongoClient("localhost")
+    """coneccion = pymongo.MongoClient("localhost")
     db = coneccion.zotero
     db.drop_collection("bookmarks")
-    datos=db.bookmarks
+    datos=db.bookmarks"""
     for item in items:
-        print item["data"]["url"]
-        datos.insert(item)
+        print item["data"]["title"]
+        #datos.insert(item)
 
+actualizar()
 #for key in map["list"]:
     #print map["list"][key]["resolved_title"]
